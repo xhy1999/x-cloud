@@ -1,0 +1,12 @@
+project:
+  host: 10.130.1.53
+
+spring:
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 10.130.1.37:8848, 10.130.1.112:8848
+    sentinel:
+      transport:
+        port: 8719
+        dashboard: 10.130.1.53:8080

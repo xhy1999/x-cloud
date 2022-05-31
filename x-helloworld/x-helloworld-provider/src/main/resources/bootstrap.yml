@@ -1,0 +1,100 @@
+project:
+  host: 127.0.0.1
+
+server:
+  port: 9001
+  tomcat:
+    max-connections: 40
+    connection-timeout: 8000
+    max-http-form-post-size: 10MB
+
+spring:
+  application:
+    name: @artifactId@
+  cloud:
+    nacos:
+      discovery:
+        group: nacos-group-helloworld-service
+        server-addr: ${project.host}:8848
+    sentinel:
+      eager: true
+      transport:
+        port: 8719
+        dashboard:
+    inetutils:
+      # 计算主机名的超时时间
+      timeout-seconds: 10
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://${project.host}:3306/x_cloud?useSSL=false&useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai
+    username: root
+    password: 123456
+    type: com.alibaba.druid.pool.DruidDataSource
+    druid:
+      initial-size: 5
+      minIdle: 10
+      max-active: 20
+      test-while-idle: false
+  h2:
+    console:
+      settings:
+        trace: off
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+  main:
+    allow-circular-references: true
+    allow-bean-definition-overriding: true
+  mvc:
+    async:
+      request-timeout: 8000
+    servlet:
+      load-on-startup: 1
+  servlet:
+    multipart:
+      max-file-size: 5MB
+      max-request-size: 10MB
+
+dubbo:
+  protocol:
+    name: dubbo
+#    port: -1
+    port: 20880
+  scan:
+    base-packages: com.xcloud.helloworld.common.dubbo
+  cloud:
+    subscribed-services: null
+  provider:
+    timeout: 3000
+    retries: 0
+
+rocketmq:
+  name-server: ${project.host}:9876;
+  producer:
+    group: mq-helloworld-service-producer-group
+    # 不要重试
+    retry-times-when-send-async-failed: 0
+
+management:
+  endpoint:
+    health:
+      show-details: always
+  endpoints:
+    web:
+      exposure:
+        include: ["*"]
+  health:
+    redis:
+      enabled: false
+
+mybatis-plus:
+  configuration:
+    mapUnderscoreToCamelCase: true
+    #log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  mapper-locations: classpath:mapper/*.xml
+  global-config:
+    banner: false
+    db-config:
+      logic-delete-field: is_del  # 全局逻辑删除的实体字段名
+      logic-delete-value: 1       # 逻辑已删除值(默认为 1)
+      logic-not-delete-value: 0   # 逻辑未删除值(默认为 0)

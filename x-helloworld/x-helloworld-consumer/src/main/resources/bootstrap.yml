@@ -1,0 +1,63 @@
+project:
+  host: 127.0.0.1
+
+server:
+  port: 81
+  tomcat:
+    max-connections: 80    # 最大连接数
+    connection-timeout: 8000  # 连接超时
+    max-http-form-post-size: 10MB
+
+spring:
+  application:
+    name: @artifactId@
+  cloud:
+    nacos:
+      discovery:
+        group: nacos-group-helloworld-service
+        server-addr: ${project.host}:8848
+    sentinel:
+      eager: true
+      transport:
+        port: 8719
+        dashboard:
+    inetutils:
+      # 计算主机名的超时时间
+      timeout-seconds: 2
+  h2:
+    console:
+      settings:
+        trace: off
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+  main:
+    allow-circular-references: true
+    allow-bean-definition-overriding: true
+  mvc:
+    servlet:
+      load-on-startup: 1
+  servlet:
+    multipart:
+      max-file-size: 5MB
+      max-request-size: 10MB
+
+dubbo:
+  protocol:
+    name: dubbo
+#    port: -1
+    port: 20880
+  cloud:
+    subscribed-services: x-helloworld-provider
+  consumer:
+    check: false
+    timeout: 3000
+    actives: 50
+    connections: 50
+    retries: 0
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: ["*"]
