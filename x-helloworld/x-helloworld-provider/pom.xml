@@ -20,6 +20,10 @@
     </properties>
 
     <dependencies>
+        <dependency>
+            <groupId>com.xcloud</groupId>
+            <artifactId>x-helloworld-common</artifactId>
+        </dependency>
         <!-- rocketmq -->
         <dependency>
             <groupId>org.apache.rocketmq</groupId>

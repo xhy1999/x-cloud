@@ -58,8 +58,8 @@ spring:
 dubbo:
   protocol:
     name: dubbo
-#    port: -1
-    port: 20880
+    port: -1
+#    port: 20880
   scan:
     base-packages: com.xcloud.helloworld.common.dubbo
   cloud:

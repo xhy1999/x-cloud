@@ -1,5 +1,5 @@
 project:
-  host: 10.130.1.53
+  host: 10.130.1.113
 
 spring:
   cloud:
