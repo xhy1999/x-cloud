@@ -18,7 +18,7 @@ import java.io.IOException;
 @WebFilter(urlPatterns = "/*")
 public class RequestHeaderFilter implements Filter {
 
-    @Value("${pam.is-product}")
+    @Value("${project.is-product}")
     private boolean isProduct;
 
     @Override

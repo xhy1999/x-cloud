@@ -1,5 +1,7 @@
 project:
   host: 10.130.1.53
+  # 是否为生产环境
+  is-product: false
 
 spring:
   cloud:

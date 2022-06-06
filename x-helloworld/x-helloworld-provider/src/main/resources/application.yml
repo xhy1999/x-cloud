@@ -1,5 +1,6 @@
 project:
   host: 10.130.1.113
+  is-product: false
 
 spring:
   cloud:
