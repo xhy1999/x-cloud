@@ -7,7 +7,10 @@
 本项目使用`Nacos(服务注册发现/配置管理/服务管理)` + `Dubbo(服务调用/负载均衡)` + `Sentinel(流量控制/熔断降级/系统负载保护)` + `RocketMQ(消息队列)` + `Seata(分布式事务,暂时没有使用)`
 
 # 准备工作
-## 1.Nacos
+## 1.数据库
+使用`Mysql5.7`,随便新建一个名为x_cloud的数据库,后续会使用
+
+## 2.Nacos
 进入[官网](https://nacos.io/zh-cn/),下载并启动Nacos,配置略
 - 进入`bin`目录
 - 以单机模式启动Nacos
@@ -27,7 +30,7 @@
   - `./logs` 
   - `./status`
 
-## 2.RocketMQ
+## 3.RocketMQ
 进入[官网](https://rocketmq.apache.org/),下载并启动RocketMQ,配置略
 - 进入`bin`目录
 - 运行mqnamesrv
@@ -38,7 +41,7 @@
   - (Windows) `mqbroker.cmd`
 - 默认会使用`9876(Namesrv)`和`10911(Broker)`端口
 
-## 3.Sentinel控制台(可选)
+## 4.Sentinel控制台(可选)
 进入[发布页](https://github.com/alibaba/Sentinel),下载`sentinel-dashboard-xxx.jar`
 - 运行Sentinel控制台
   - (Linux) `nohup java -jar sentinel-dashboard-xxx.jar >log.txt &`
@@ -46,3 +49,15 @@
   - 控制台地址 `http://127.0.0.1:8080/`
   - 用户名密码 `sentinel/sentinel`
 - 默认会使用`8080`端口
+
+# 项目模块介绍
+```
+x-cloud
+┣━ x-common                     公共模块
+┃  ┗━ x-common-util               公共工具类
+┣━ x-helloworld                 示例服务
+┃  ┣━ x-helloworld-common         示例服务公共模块
+┃  ┣━ x-helloworld-consumer       示例服务消费者
+┃  ┗━ x-helloworld-provider       示例服务生产者
+┗━ x-monitor                    SpringBootAdmin监控
+```
