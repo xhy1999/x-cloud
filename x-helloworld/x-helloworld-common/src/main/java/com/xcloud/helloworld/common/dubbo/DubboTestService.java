@@ -9,6 +9,7 @@ import com.xcloud.util.result.Result;
  */
 public interface DubboTestService {
 
+    //项目地址测试
     Result lbTest();
 
 }

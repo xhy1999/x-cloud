@@ -9,6 +9,7 @@ import com.xcloud.util.result.Result;
  */
 public interface DubboMqService {
 
+    //rocketMQ测试
     Result rocketMQTest(String message);
 
 }
