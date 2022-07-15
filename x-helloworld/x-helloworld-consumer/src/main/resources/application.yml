@@ -1,5 +1,5 @@
 project:
-  host: 10.130.1.53
+  host: 10.130.1.78
   # 是否为生产环境
   is-product: false
 
@@ -7,8 +7,12 @@ spring:
   cloud:
     nacos:
       discovery:
-        server-addr: 10.130.1.37:8848, 10.130.1.112:8848
+        server-addr: 192.168.14.104:8848
     sentinel:
       transport:
         port: 8719
-        dashboard: 10.130.1.53:8080
+        dashboard: 10.130.1.78:8080
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/x_cloud?useSSL=false&useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai
+    username: root
+    password: 123456

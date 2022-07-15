@@ -1,20 +1,32 @@
 project:
-  host: 10.130.1.113
+  host: 10.130.1.78
   is-product: false
 
 spring:
   cloud:
     nacos:
       discovery:
-        server-addr: 10.130.1.37:8848, 10.130.1.112:8848
+        server-addr: 192.168.14.104:8848
     sentinel:
       transport:
         port: 8719
-        dashboard: 10.130.1.53:8080
+        dashboard: 10.130.1.78:8080
   datasource:
-    url: jdbc:mysql://${project.host}:3306/x_cloud?useSSL=false&useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai
+    url: jdbc:mysql://127.0.0.1:3306/x_cloud?useSSL=false&useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai
     username: root
     password: 123456
 
 rocketmq:
-  name-server: 10.130.1.37:9876; 10.130.1.112:9876;
+  name-server: 192.168.14.104:9876;
+
+seata:
+  registry:
+    type: nacos
+  config:
+    type: file
+  tx-service-group: default_tx_group
+  service:
+    vgroup-mapping:
+      default_tx_group: default
+    grouplist:
+      default: 127.0.0.1:8091

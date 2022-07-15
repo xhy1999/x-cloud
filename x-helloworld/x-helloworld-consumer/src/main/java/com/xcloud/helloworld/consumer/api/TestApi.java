@@ -18,11 +18,11 @@ import org.springframework.web.bind.annotation.RestController;
 public class TestApi {
 
     @DubboReference(timeout = 20000)
-    private DubboTestService dubboUserService;
+    private DubboTestService dubboTestService;
 
     @PostMapping("/lbTest")
     public Result lbTest() {
-        return dubboUserService.lbTest();
+        return dubboTestService.lbTest();
     }
 
 }
