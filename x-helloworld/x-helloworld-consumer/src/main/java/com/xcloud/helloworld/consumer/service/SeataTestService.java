@@ -1,6 +1,7 @@
 package com.xcloud.helloworld.consumer.service;
 
 import com.xcloud.util.result.Result;
+import io.seata.core.exception.TransactionException;
 
 /**
  * @author xuehy
@@ -9,6 +10,6 @@ import com.xcloud.util.result.Result;
 public interface SeataTestService {
 
     //模拟提交订单服务
-    Result submitOrder();
+    Result submitOrder() throws TransactionException;
 
 }

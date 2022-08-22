@@ -10,9 +10,14 @@ import com.xcloud.helloworld.consumer.service.SeataTestService;
 import com.xcloud.util.UUIDUtil;
 import com.xcloud.util.result.Result;
 import com.xcloud.util.result.ResultCode;
+import io.seata.core.context.RootContext;
+import io.seata.core.exception.TransactionException;
 import io.seata.spring.annotation.GlobalTransactional;
+import io.seata.tm.api.GlobalTransactionContext;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.dubbo.config.annotation.DubboReference;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 
@@ -20,6 +25,7 @@ import java.math.BigDecimal;
  * @author xuehy
  * @since 2022/7/12
  */
+@Slf4j
 @Service
 public class SeataTestServiceImpl implements SeataTestService {
 
@@ -34,7 +40,8 @@ public class SeataTestServiceImpl implements SeataTestService {
 
     @Override
     @GlobalTransactional(rollbackFor = Exception.class)
-    public Result submitOrder() {
+    public Result submitOrder() throws TransactionException {
+        log.info("开始全局事务:xid="+ RootContext.getXID());
         //获取用户信息
         UserEntity user = dubboUserService.getUserInfo("10001");
         //获取商品信息
@@ -43,6 +50,14 @@ public class SeataTestServiceImpl implements SeataTestService {
         GoodsInfoEntity goodsInfo2 = dubboGoodsInfoService.getGoodsInfo(2);
         int goodsNum2 = 6;
         //进行一些判断...
+
+        if (goodsInfo1.getInventoryNum() < goodsNum1) {
+            return Result.fail(ResultCode.ERR_PARAM, "商品[" + goodsInfo1.getName() + "]库存不足");
+        }
+        if (goodsInfo2.getInventoryNum() < goodsNum2) {
+            return Result.fail(ResultCode.ERR_PARAM, "商品[" + goodsInfo2.getName() + "]库存不足");
+        }
+
         //开始生成订单
         OrderInfoEntity orderInfoEntity = new OrderInfoEntity();
         String orderId = UUIDUtil.getUUID(UUIDConst.ORDER_ID_HEAD, UUIDConst.ID_LENGTH);
@@ -74,6 +89,10 @@ public class SeataTestServiceImpl implements SeataTestService {
         //保存订单明细
         dubboOrderDetailService.saveOrderDetail(detailEntity1);
         dubboOrderDetailService.saveOrderDetail(detailEntity2);
+        //手动回滚
+        //System.out.println(RootContext.getXID() == null);
+        //GlobalTransactionContext.reload(RootContext.getXID()).rollback();
+        System.out.println(100 / (100 - 100));
 
         dubboOrderInfoService.saveOrderInfo(orderInfoEntity);
 

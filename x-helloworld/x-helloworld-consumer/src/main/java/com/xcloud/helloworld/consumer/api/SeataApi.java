@@ -2,6 +2,7 @@ package com.xcloud.helloworld.consumer.api;
 
 import com.xcloud.helloworld.consumer.service.SeataTestService;
 import com.xcloud.util.result.Result;
+import io.seata.core.exception.TransactionException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,7 +25,7 @@ public class SeataApi {
     private SeataTestService seataTestService;
 
     @PostMapping("/submitOrder")
-    public Result submitOrder() {
+    public Result submitOrder() throws TransactionException {
         return seataTestService.submitOrder();
     }
 

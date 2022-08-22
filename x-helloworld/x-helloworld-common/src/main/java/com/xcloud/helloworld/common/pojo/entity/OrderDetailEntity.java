@@ -6,12 +6,13 @@ import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 
 @Data
 @TableName("order_detail")
-public class OrderDetailEntity {
+public class OrderDetailEntity implements Serializable {
 
     /**
      * 编号
